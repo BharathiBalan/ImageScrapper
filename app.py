@@ -71,7 +71,8 @@ def searchImages():
         #print("done with this image")
     return render_template('showImage.html', user_images=imgnames)
 
-
+port = int(os.getenv("PORT"))
 if __name__ == "__main__":
     #app.run(host='127.0.0.1', port=8000) # port to run on local machine
-    app.run(debug=True) # to run on cloud
+    #app.run(debug=True) # to run on cloud
+    app.run(host='0.0.0.0', port=port)

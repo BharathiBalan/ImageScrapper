@@ -36,12 +36,14 @@ def searchImages():
     chrome_options.add_argument('--no-sandbox')
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-dev-shm-usage')
+    chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
 
-    driver = webdriver.Chrome(executable_path='E:\Machine Learning\Softwares\chromedriver', chrome_options=chrome_options)
-    # driver=webdriver.Chrome()
+    #driver = webdriver.Chrome(executable_path='E:\Machine Learning\Softwares\chromedriver', chrome_options=chrome_options)
+    driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
+    #driver=webdriver.Chrome()
     driver.get(url)
     driver.implicitly_wait(2)
-    data = driver.page_source
+    #data = driver.page_source
 
     a = driver.find_elements_by_css_selector('img.Q4LuWd')
     #print('[DRIVER]', a, type(a))

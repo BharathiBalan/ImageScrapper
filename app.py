@@ -37,7 +37,9 @@ def searchImages():
     chrome_options.add_argument('--headless')
     chrome_options.add_argument('--disable-dev-shm-usage')
     chrome_options.binary_location = os.environ.get("GOOGLE_CHROME_BIN")
-
+    bb=os.environ.get("GOOGLE_CHROME_BIN")
+    baba=executable_path=os.environ.get("CHROMEDRIVER_PATH")
+    print(bb,baba)
     #driver = webdriver.Chrome(executable_path='E:\Machine Learning\Softwares\chromedriver', chrome_options=chrome_options)
     driver = webdriver.Chrome(executable_path=os.environ.get("CHROMEDRIVER_PATH"), chrome_options=chrome_options)
     #driver=webdriver.Chrome()

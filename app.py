@@ -44,8 +44,10 @@ def searchImages():
     driver.implicitly_wait(2)
     #data = driver.page_source
     for del_file in os.listdir('static/'):
+        #print(del_file)
         if del_file.endswith('.jpeg'):
-            os.remove(del_file)
+            #print("need to delete")
+            os.remove('static/'+del_file)
     a = driver.find_elements_by_css_selector('img.Q4LuWd')
     #print('[DRIVER]', a, type(a))
     imgs = []

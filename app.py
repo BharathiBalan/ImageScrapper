@@ -2,14 +2,11 @@ from mimetypes import guess_extension
 
 from selenium import webdriver
 import os
+import requests
 from bs4 import BeautifulSoup as bs
-from urllib.request import urlretrieve
+from urllib.request import Request , urlopen
 from flask import Flask, render_template, request, jsonify
 from flask_cors import CORS, cross_origin
-
-# keyWord = "apple_store"
-# noofImages = 2
-#url = "https://www.google.com/search?q=" + keyWord + "&source=lnms&tbm=isch"
 
 app = Flask(__name__)
 
@@ -65,7 +62,7 @@ def searchImages():
                 imgname=keyWord + str(len(imgs)) + '.jpeg'
                 filename = 'static/' + imgname
                 #print(filename)
-                urlretrieve(e, filename)
+                Request(e, filename, headers={"User-Agent": "Chrome"})
                 imgnames.append(imgname)
             if (len(imgs)) == noofImages:
                 break

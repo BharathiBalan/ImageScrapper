@@ -2,10 +2,8 @@ from mimetypes import guess_extension
 
 from selenium import webdriver
 import os
-import requests
-from bs4 import BeautifulSoup as bs
-from urllib.request import Request , urlopen
-from flask import Flask, render_template, request, jsonify
+from urllib.request import Request
+from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
 
 app = Flask(__name__)

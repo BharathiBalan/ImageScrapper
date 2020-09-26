@@ -2,7 +2,7 @@ from mimetypes import guess_extension
 
 from selenium import webdriver
 import os
-from urllib.request import Request
+from urllib.request import urlretrieve, Request
 from flask import Flask, render_template, request
 from flask_cors import CORS, cross_origin
 
@@ -14,7 +14,7 @@ def home():
     return render_template('index.html')
 
 @app.route('/searchImages', methods=['GET','POST'])
-#@cross_origin()
+@cross_origin()
 def searchImages():
     # driver = webdriver.Chrome('E:\Machine Learning\Softwares/chromedriver')
     if request.method == 'POST':
@@ -43,10 +43,12 @@ def searchImages():
         if del_file.endswith('.jpeg'):
             #print("need to delete")
             os.remove('static/'+del_file)
-    a = driver.find_elements_by_css_selector('img.Q4LuWd')
-    #print('[DRIVER]', a, type(a))
     imgs = []
     imgnames=[]
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    a = driver.find_elements_by_css_selector('img.Q4LuWd')
+    print(len(a))
+    #print('[DRIVER]', a, type(a))
     for b in a:
         #print('[Driver]', b)
         b.click()
@@ -55,19 +57,25 @@ def searchImages():
         for d in c:
             e = d.get_attribute('src')
             #print(e, type(e))
-            if e not in imgs:
+            if e not in imgs and 'http' in e:
+                #print(len(imgnames),e)
                 imgs.append(e)
                 imgname=keyWord + str(len(imgs)) + '.jpeg'
                 filename = 'static/' + imgname
                 #print(filename)
-                Request(e, filename, headers={"User-Agent": "Chrome"})
-                imgnames.append(imgname)
-            if (len(imgs)) == noofImages:
+                try:
+                    urlretrieve(e,filename)
+                    #Request(e, filename, headers={"User-Agent": "Chrome"})
+                    imgnames.append(imgname)
+                except Exception as abcd:
+                    print("error while downloading the image ",e,"\nwith error ",abcd)
+            if (len(imgnames)) == noofImages:
                 break
-        if (len(imgs)) == noofImages:
+        if (len(imgnames)) == noofImages:
             break
         #print("done with this image")
     return render_template('showImage.html', user_images=imgnames)
+
 
 port = int(os.getenv("PORT"))
 if __name__ == "__main__":
